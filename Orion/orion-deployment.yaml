@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: orion
+  namespace: fiware-test
+  labels:
+    app: orion
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: orion
+  template:
+    metadata:
+      labels:
+        app: orion
+    spec:
+      containers:
+      - name: orion
+        image: fiware/orion:latest
+        ports:
+        - containerPort: 1026
+        args: ["-dbhost", "localhost"]
+      - name: orion-mongodb
+        image: mongo:4.2
+        ports:
+        - containerPort: 27017
